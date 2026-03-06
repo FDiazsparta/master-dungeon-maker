@@ -8,10 +8,11 @@ A web-based D&D dungeon map editor featuring procedural generation, visual themi
 - **Procedural Generation** — BSP (Binary Space Partition) algorithm generates connected dungeon layouts with configurable room count, dimensions, and seeded randomness.
 - **8 Visual Themes** — Goblin's Map, Stone Dungeon, Natural Cave, Ice Fortress, Infernal, Ancient Temple, Sewer, and Arcane Library — each with procedural tile textures.
 - **D&D 5e Encounters** — Auto-generated encounters per room based on party size, level, and theme. Includes monsters (SRD), loot tables, and traps with DC/damage.
-- **Export** — Save as PNG, JSON, or printable PDF with encounter details.
+- **Export** — Save as PNG, JSON, or branded printable PDF with Grizzik header/footer and encounter details.
 - **Cloud Save & Sharing** — Optional Supabase integration for user accounts, cloud storage, and shareable dungeon links.
 - **Grizzik the Cartographer** — A goblin mascot who provides context-aware mapping tips via a chat panel.
 - **Background Music** — Ambient dungeon soundtrack with volume control.
+- **Editable Dungeon Name** — Rename your dungeon directly from the header bar; syncs everywhere including exports.
 - **Intro Screen** — Themed entry screen with Grizzik welcoming new cartographers.
 
 ## Getting Started
@@ -44,7 +45,8 @@ The app works fully offline without Supabase configured.
 ├── head-master dungeon-maker.png  # Header mascot image
 ├── music.mp3              # Background music (Git LFS)
 ├── SETUP.md               # Supabase setup guide
-└── test-runtime.js        # Runtime tests (jsdom)
+├── test-runtime.js        # Runtime tests (jsdom)
+└── README.md              # This file
 ```
 
 ## Keyboard Shortcuts
