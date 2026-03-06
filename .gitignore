@@ -1,0 +1,9 @@
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+.env
+package-lock.json
+mascot.svg
+music.mp3
+Dusty Catacombs of Code.mp3
