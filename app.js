@@ -1559,6 +1559,11 @@ class App {
     });
     document.getElementById('dungeon-name').addEventListener('input', (e) => {
       this.dungeon.metadata.name = e.target.value;
+      document.getElementById('header-dungeon-name').value = e.target.value;
+    });
+    document.getElementById('header-dungeon-name').addEventListener('input', (e) => {
+      this.dungeon.metadata.name = e.target.value;
+      document.getElementById('dungeon-name').value = e.target.value;
     });
   }
 
@@ -1676,6 +1681,7 @@ class App {
           this._updateStats();
           this._render();
           document.getElementById('dungeon-name').value = this.dungeon.metadata.name;
+          document.getElementById('header-dungeon-name').value = this.dungeon.metadata.name;
         } catch (err) {
           alert('Failed to load dungeon: ' + err.message);
         }
@@ -1740,6 +1746,7 @@ class App {
       this._updateStats();
       this._render();
       document.getElementById('dungeon-name').value = 'Untitled Dungeon';
+      document.getElementById('header-dungeon-name').value = 'Untitled Dungeon';
       document.getElementById('new-modal').classList.remove('active');
     });
 
@@ -1875,26 +1882,45 @@ class App {
       encounterHTML += '</div>';
     }
 
+    const mascotB64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABKCAYAAAAsXNNQAAAKq2lDQ1BJQ0MgUHJvZmlsZQAAeJyVlwdQU+kWx797bzoJLXQpoTfpLYCU0EOXDqISkgChhBgIIHZkcQFXFBERUBZ0FUTBtQCyFsSChUWwYd8gi4C6LhZsWN4FhrC7b957887Myfnl5Nz/d75v7jdzAgBFhSUQpMOyAGTws4Vhvh60mNg4Gv4ZQAAWRIA8ILPYWQJGaGggQG0u/t3e3QHQdLxpNq3177//V5PjcLPYAEChKCdystgZKB9H/TVbIMwGAGlE87q52YJp7kVZQYg2iLJ4mpNn+e00J84whjBTExHmibI6AAQyiyVMBoBshOZpOexkVIfsh7Iln8Pjo5yHsmtGRiYH5Q6UjdAaAcrT+vTEv+gk/00zUaLJYiVLeHYvM0bw4mUJ0lkr/8/j+N+WkS6aW8MQdXKK0C8MjdLomf2elhzPnmMPyCpDopAcHznESz0dSw8tmRswxN8s7fI6FmWGSdZOEnow5ZgrnexClRUryKVymRD8/JSJ6jnN4UcGS3tLCA+ZrPCV5oShMshcu39djfl0fyTlkZP1l7zym5NnslAg/yZ+fLdfpuo8/FhWo/2KHQbnOAvfANJ5v+NJt9w/TcEiR/God+LQw1jDkZkllCEmMUOQSi2zmxxVxwdYXJtm2aGDVdG9mV6S9J5YXMBqZHHj4BRMXKwqHdYA8kEfY1DV7zafvGSHWHXTjaX0tB0uh5t+hsRqXy/sxw2dDpX5hgD/HOtwAlc7e1QG53XhZFRYYdPUkxXHlovT1YnDEZbYRs+JvvofPABL0YPneJfq3KvNs3s71MPIrmiGSlQPjWiWULF4h7h4jZtOQClEA9xjRgp/GaazcomZvo2P6iOuYLAYGFW3nr4dLugpscNR2uIX9m06wxKelZ6l8fHMTo1KFN4I/7FU4kSSF/Hwqj4Y0aJwQgs9AQ9WySTZEwVGTj11nJDCnnOodqzY7YgCzNFWyz3NGJfb2KOJWA150yXiYCpiF13kUA1rc/uLk/H9TVPhk8h1ppJTQAqilf2XTgnEaw==';
+
     const printHTML = `<!DOCTYPE html>
 <html><head><title>${this.dungeon.metadata.name}</title>
 <style>
-body { font-family: Georgia, serif; padding: 20px; color: #222; }
-h1 { font-size: 24px; border-bottom: 2px solid #333; padding-bottom: 8px; }
-h2 { font-size: 18px; margin-top: 20px; }
+body { font-family: Georgia, serif; padding: 20px; color: #2a2218; background: #fffbf0; }
+.pdf-header { display: flex; align-items: center; gap: 16px; padding-bottom: 12px; border-bottom: 3px solid #b89a50; margin-bottom: 20px; }
+.pdf-header img { width: 56px; height: 56px; border-radius: 50%; border: 3px solid #b89a50; object-fit: cover; }
+.pdf-header-text h1 { font-size: 24px; margin: 0; color: #2a2218; }
+.pdf-header-text p { font-size: 13px; margin: 4px 0 0; color: #6a5a40; }
+h2 { font-size: 18px; margin-top: 24px; color: #4a3a28; border-bottom: 1px solid #d4c8a8; padding-bottom: 4px; }
 h3 { font-size: 15px; margin: 8px 0 4px; color: #444; }
-img { max-width: 100%; border: 1px solid #ccc; }
-.room-block { margin-bottom: 16px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; page-break-inside: avoid; }
+.map-img { max-width: 100%; border: 2px solid #b89a50; border-radius: 4px; }
+.room-block { margin-bottom: 16px; padding: 12px; border: 1px solid #d4c8a8; border-radius: 6px; background: #fff8e8; page-break-inside: avoid; }
 ul { margin: 4px 0; padding-left: 20px; }
 li { margin: 2px 0; }
-@media print { body { padding: 0; } }
+.pdf-footer { margin-top: 32px; padding-top: 12px; border-top: 2px solid #b89a50; display: flex; align-items: center; gap: 12px; }
+.pdf-footer img { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #b89a50; object-fit: cover; }
+.pdf-footer-text { font-size: 11px; color: #8a7a60; font-style: italic; }
+.pdf-footer-text strong { color: #4a3a28; font-style: normal; }
+@media print { body { padding: 0; background: #fff; } }
 </style></head><body>
-<h1>${this.dungeon.metadata.name}</h1>
-<p>Theme: ${this.dungeon.metadata.theme} · Size: ${this.dungeon.width}x${this.dungeon.height} · Rooms: ${this.dungeon.getRoomCount()}</p>
+<div class="pdf-header">
+  <img src="${mascotB64}" alt="Grizzik">
+  <div class="pdf-header-text">
+    <h1>${this.dungeon.metadata.name}</h1>
+    <p>Theme: ${this.dungeon.metadata.theme} · Size: ${this.dungeon.width}×${this.dungeon.height} · Rooms: ${this.dungeon.getRoomCount()}</p>
+  </div>
+</div>
 <h2>Map</h2>
-<img src="${mapDataUrl}" alt="Dungeon Map">
+<img class="map-img" src="${mapDataUrl}" alt="Dungeon Map">
 <h2>Room Details</h2>
 ${encounterHTML}
-<hr><p style="font-size:11px;color:#999;">Generated by Master Dungeon Maker</p>
+<div class="pdf-footer">
+  <img src="${mascotB64}" alt="Grizzik">
+  <div class="pdf-footer-text">
+    Cartography by <strong>Grizzik the Cartographer</strong> · Generated with <strong>Master Dungeon Maker</strong>
+  </div>
+</div>
 </body></html>`;
 
     const blob = new Blob([printHTML], { type: 'text/html' });
@@ -2384,6 +2410,7 @@ ${encounterHTML}
       // Update dungeon name
       this.dungeon.metadata.name = name;
       document.getElementById('dungeon-name').value = name;
+      document.getElementById('header-dungeon-name').value = name;
 
       try {
         const json = this.dungeon.toJSON();
@@ -2507,6 +2534,7 @@ ${encounterHTML}
             this._updateStats();
             this._render();
             document.getElementById('dungeon-name').value = this.dungeon.metadata.name;
+            document.getElementById('header-dungeon-name').value = this.dungeon.metadata.name;
             document.getElementById('cloud-load-modal').classList.remove('active');
           } catch (err) {
             errEl.textContent = 'Load failed: ' + (err.message || err);
@@ -2559,6 +2587,7 @@ ${encounterHTML}
       this._updateStats();
       this._render();
       document.getElementById('dungeon-name').value = this.dungeon.metadata.name + ' (shared)';
+      document.getElementById('header-dungeon-name').value = this.dungeon.metadata.name + ' (shared)';
       // Clear share param from URL without reload
       window.history.replaceState({}, '', window.location.pathname);
     } catch (err) {

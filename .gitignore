@@ -5,3 +5,6 @@ Thumbs.db
 .env
 package-lock.json
 mascot.svg
+
+# Local Netlify folder
+.netlify
